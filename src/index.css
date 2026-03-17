@@ -51,6 +51,15 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+.content {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;  
+  padding: 20px 0;
+}
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -60,8 +69,6 @@ button {
   a:hover {
     color: #747bff;
   }
-
- 
 }
 .bl {
   position: absolute;
@@ -154,11 +161,14 @@ button {
   opacity: 0.6;
 }
 .main {
-  position: relative;
-  /* flex-grow: 1; */
+   position: relative;
   z-index: 2;
-  padding: 0;
-  width: fit-content;
+  width: 90vw;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 
 }
 .pill:nth-child(odd){
@@ -181,9 +191,7 @@ button {
   margin: 0 20px;
 }
 .prompt-ar{
-  width: 100%;
-  /* border: 1px solid #ffff; */
-  flex-grow: 1;
+  flex: 1;                  
   overflow: auto;
   border-radius: 32px;
   display: flex;
@@ -191,7 +199,7 @@ button {
   align-items: center;
   background-color: rgba(0, 0, 0, .1);
   margin: 20px 0;
-  transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .prompt-ar h1{
   margin-bottom: 40px;
@@ -199,17 +207,17 @@ button {
   animation: slide 1s ease-in-out 1s forwards;
 }
 .box{
-  width: 300px;
-  height: 50px;
+  width: auto;
   display: flex;
-
+  flex-direction: column; /* ← stack label above input on mobile */
+  height: auto;
+  gap: 4px;
   justify-content: center;
   /* border: 1px solid #ffff; */
   font-size: 22px;
   border-radius: 32px;
   font-weight: 600;
   align-items: center;
-  gap: 12px;
 }
 .box .drop{
   width: 160px;
@@ -224,20 +232,20 @@ button {
   border-radius: 32px;
 
 }
-.inputs{
-  border-radius: 32px;
-  /* border: 1px solid #ffff; */
-  width: 100%;
-  background-color: rgba(0, 0, 0, .5);
-}
+
 .inputs{
   display: flex;
-  padding: 8px 12px;
+  flex-direction: row;
+  flex-wrap: nowrap;        /* ← keep all on ONE line */
   justify-content: center;
+  gap: 4px;
+  padding: 8px 12px;
+  border-radius: 32px;
+  background-color: rgba(0, 0, 0, .5);
 }
 .desc{
-  width: 50%;
-  /* border: 1px solid #fff; */
+  width: 90%;
+
   border-radius: 32px;
   margin: 20px auto;
   gap: 12px;
@@ -246,7 +254,8 @@ button {
   padding: 4px 0;
 }
 .desc input{
-  width: 440px;
+   width: 100%;  
+  max-width: 440px;
   border-radius: 10px;
   text-align: center;
   height: 44px;
@@ -259,17 +268,102 @@ button {
 .stick{
   position: sticky;
   bottom: 0;
+  padding-bottom: 16px;
+  background: transparent;
 }
 .res{
   width: 100%;
   display: flex;
-  gap: 15px;
-  justify-content: space-evenly;
-  font-size: 32px;
-  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: 20px;
+  box-sizing: border-box;
 }
 .res img{
-  width: 400px;
-  height: 500px;
+    width: 100%;
+  max-width: 380px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 0 0 20px 20px;  /* rounded bottom only */
+  padding: 20px;
+  box-sizing: border-box;
+  backdrop-filter: blur(10px);
+}
+@media (max-width: 768px) {
+  h1 { font-size: 2em; }
+  .box { font-size: 16px; }
+  .desc input { font-size: 18px; }
+  .res { font-size: 20px; }
+}
+@media (max-width: 768px) {
+  .inputs {
+    flex-direction: row;  /* ← keep horizontal */
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 6px;
+  }
+
+  .box {
+    flex-direction: column;
+  font-size: 13px;          
+  gap: 2px;
+  align-items: center;
+  }
+
+  .box .drop {
+    width: 80px;              
+  height: 28px;
+  font-size: 13px;
   border-radius: 20px;
+  background-color: rgba(0, 0, 0, .7);
+  border: none;
+  text-align: center;
+  }
+}
+.res p{
+  width: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
+  text-align: left;        /* easier to read than center */
+  word-wrap: break-word;
+  font-size: 16px;         /* smaller, more readable */
+  line-height: 1.6;
+}
+.outfit-card {
+  width: 100%;
+  display: flex;
+  opacity: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  animation: slide .5s ease-in-out  forwards;
+}
+.outfit-card img {
+  width: 80%;
+  max-width: 300px;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+.outfit-details {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 16px;
+}
+::-webkit-scrollbar{
+  width: 2px;
+  color: #ffff;
+}
+.outfit-line {
+  background: rgba(255,255,255,0.05);
+  border-left: 3px solid #B18CFE;  /* purple accent */
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 15px;
+  line-height: 1.5;
 }

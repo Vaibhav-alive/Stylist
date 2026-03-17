@@ -114,7 +114,10 @@ function App() {
     setLoad(true)
     Fetch()
   }
-
+  function parseOutfit(text) {
+  const lines = text.replace(/\*\*/g, '').split('\n').filter(l => l.trim())
+  return lines
+}
   return (
     <>
       <div className="bg" style={{ transform: `translate(${offset.x}px, ${offset.y}px)` }}>
@@ -139,7 +142,7 @@ function App() {
         <div className="prompt-ar"
           style={{
             height: heightval,
-            width: widthval
+            
           }}
         >
           {
@@ -158,12 +161,16 @@ function App() {
                 }
                 {
                   !load && data && (
-                    <div className="res">
-                      
-                      <img src={`data:image/jpeg;base64,${data.img}`} alt="" />
-                      <p>{data.outfit}</p>
-                    </div>
-
+                        <div className="outfit-card">
+                          <img src={`data:image/jpeg;base64,${data.img}`} />
+                          <div className="outfit-details">
+                          {parseOutfit(data.outfit).map((line, i) => (
+                            <div className="outfit-line" key={i}>
+                            {line}
+                            </div>
+                          ))}
+                          </div>
+                        </div>
                   )
                 }
 
@@ -179,13 +186,13 @@ function App() {
                 <div className="box">
                   <div className="label">Gender: </div>
                   <input type="text" placeholder='here...' className='drop' onChange={(e) => setGender(e.target.value)} />
-                  |
+                  
                 </div>
 
                 <div className="box">
                   <div className="label">BodyType: </div>
                   <input type="text" placeholder='here...' className='drop' onChange={(e) => setBody(e.target.value)} />
-                  |
+                  
                 </div>
                 <div className="box">
                   <div className="label">Occasion: </div>
