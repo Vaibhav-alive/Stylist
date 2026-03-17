@@ -8,12 +8,12 @@ from pydantic import BaseModel
 import os
 import base64
 from dotenv import load_dotenv
+load_dotenv()
 
 
 API_KEY = os.getenv('HF_API_KEY')
 client = Groq(api_key= os.getenv('GROQ_API_KEY'))
 
-load_dotenv()
 app = FastAPI()
 
 app.add_middleware(
