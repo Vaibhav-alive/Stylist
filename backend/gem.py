@@ -111,6 +111,7 @@ async def gen_output(data: OutfitReq):
 
     if res.headers.get("content-type") != "image/jpeg":
         print("Error from HF:", res.json())
+        return {"error": "Image generation failed"} 
     else:
         print('Saved!')
         image_base = base64.b64encode(res.content).decode('utf-8')
