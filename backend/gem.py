@@ -79,29 +79,33 @@ async def gen_output(data: OutfitReq):
 
     l = summary.choices[0].message.content
     lines = l.split('\n')
-    unique_lines = list(dict.fromkeys(lines))  # preserves order, removes duplicates
+    unique_lines = list(dict.fromkeys(lines))  
     l = '\n'.join(unique_lines)
     print(l)
     content_HF = f""" 
-    A full body editorial fashion photograph of a {gender} model with body type {body}.
-    Outfit:
-    {l}
-    The model is standing naturally in a festive outdoor {occasion} setting with warm lights and decorations.
-    Style:
-    ultra realistic fashion photography, 4k, sharp focus, natural lighting, professional photoshoot, detailed fabric texture.
+                A full body professional fashion photograph of a {gender} model, {body} build.
+                The model is wearing:
+                {l}
+                Setting: {occasion} themed background, elegant atmosphere.
+                Photography style: Vogue editorial, fashion lookbook, studio quality.
+                Technical: shot on 85mm lens, soft studio lighting, 4k, sharp focus, ultra realistic.
+                Model: natural standing pose, confident expression, full body visible head to toe including shoes.
+                Quality: photorealistic, detailed fabric texture, professional fashion photography, high resolution.
+                Negative elements to avoid: cartoon, anime, illustration, deformed, blurry, watermark, text.
 
-    The entire outfit must be visible from head to toe.
-    Full body shot, head to toe, including shoes must be visible.
-    Wide angle, full length portrait.
-    shot on 50mm lens, professional fashion photography
 
     """
 
-    API_URL = "https://router.huggingface.co/hf-inference/models/stabilityai/stable-diffusion-xl-base-1.0"
+    API_URL = "https://router.huggingface.co/hf-inference/models/yahoooooo/sdxl-fashion"
     res = requests.post(
         API_URL,
         headers={"Authorization": f"Bearer {API_KEY}"},
-        json={"inputs": content_HF}
+        json={"inputs": content_HF,
+              "parameters": {
+                    "num_inference_steps": 40, 
+                    "guidance_scale": 8.0 
+                }
+            }
     )
     print("Status:", res.status_code)
 
