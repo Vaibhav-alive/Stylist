@@ -98,7 +98,7 @@ function App() {
   }), [])
 
   async function Fetch() {
-    const res = await axios.post('http://127.0.0.1:8000/gen', {
+    const res = await axios.post('https://stylist-tdo3.onrender.com/gen', {
       gender: gender,
       body_type: body,
       occasion: occasion,
