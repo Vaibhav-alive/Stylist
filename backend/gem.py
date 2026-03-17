@@ -110,7 +110,7 @@ async def gen_output(data: OutfitReq):
     print("Status:", res.status_code)
 
     if res.headers.get("content-type") != "image/jpeg":
-        print("Error from HF:", res.json())
+        print("Error from HF:", res.text)
         return {"error": "Image generation failed"} 
     else:
         print('Saved!')
