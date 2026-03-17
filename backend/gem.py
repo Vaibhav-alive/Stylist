@@ -96,7 +96,7 @@ async def gen_output(data: OutfitReq):
 
     """
 
-    API_URL = "https://router.huggingface.co/hf-inference/models/stabilityai/stable-diffusion-xl-base-1.0"
+    API_URL = "https://router.huggingface.co/hf-inference/models/SG161222/Realistic_Vision_V6.0_B1_noVAE"
     res = requests.post(
         API_URL,
         headers={"Authorization": f"Bearer {API_KEY}"},

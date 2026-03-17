@@ -10,19 +10,20 @@ function App() {
   const [glide, setGlide] = useState(false);
   const [occasion, setOccasion] = useState('');
   const [gender, setGender] = useState('');
-  const [body, setBody] = useState('');
+  const types = [
+    { value: 'slim', label: 'Slim' },
+    { value: 'avg', label: 'Average' },
+    { value: 'athletic', label: 'Athletic' },
+    { value: 'muscular', label: 'Muscular' },
+    { value: 'heavy', label: 'Broad' }
+  ]
   const [desc, setDesc] = useState('')
+  const [body, setBody] = useState('')
+  const [open, setOpen] = useState(false)
   const [sent, setSent] = useState(false)
   const [data, setData] = useState(null)
   const [load, setLoad] = useState(false)
-
-  const [heightval, setHeightval] = useState(`${window.innerHeight * 0.3}px`)
-  const widthval = `${window.innerWidth - 100}px`
-
-  const options = {
-    Gender: ['male', 'female'],
-    Body_type: ['athletic', 'slim']
-  }
+  const [heightval, setHeightval] = useState(`${window.innerHeight * 0.4}px`)
   const target = useRef({ x: 0, y: 0 });
   const current = useRef({ x: 0, y: 0 });
   const rafId = useRef(null);
@@ -115,9 +116,32 @@ function App() {
     Fetch()
   }
   function parseOutfit(text) {
-  const lines = text.replace(/\*\*/g, '').split('\n').filter(l => l.trim())
-  return lines
-}
+    const lines = text
+      .replace(/\*\*/g, '')
+      .split('\n')
+      .filter(l => l.trim())
+      .filter(l => !l.toLowerCase().includes('extracted information'))
+
+    const merged = []
+    let accLine = null
+
+    for (const line of lines) {
+      if (line.toLowerCase().includes('accessories')) {
+        accLine = line
+      } else if (accLine && line.trim().startsWith('-')) {
+        accLine += ', ' + line.replace('-', '').trim()
+      } else {
+        if (accLine) {
+          merged.push(accLine)
+          accLine = null
+        }
+        merged.push(line)
+      }
+    }
+
+    if (accLine) merged.push(accLine)
+    return merged
+  }
   return (
     <>
       <div className="bg" style={{ transform: `translate(${offset.x}px, ${offset.y}px)` }}>
@@ -142,7 +166,7 @@ function App() {
         <div className="prompt-ar"
           style={{
             height: heightval,
-            
+
           }}
         >
           {
@@ -161,16 +185,17 @@ function App() {
                 }
                 {
                   !load && data && (
-                        <div className="outfit-card">
-                          <img src={`data:image/jpeg;base64,${data.img}`} />
-                          <div className="outfit-details">
-                          {parseOutfit(data.outfit).map((line, i) => (
-                            <div className="outfit-line" key={i}>
-                            {line}
-                            </div>
-                          ))}
-                          </div>
-                        </div>
+                    <div className="outfit-card">
+                      <img src={`data:image/jpeg;base64,${data.img}`} />
+                      <div className="outfit-details">
+                        {parseOutfit(data.outfit)
+                          .filter(line => !line.toLowerCase().includes('extracted information'))
+                          .map((line, i) => (
+                            <div className="outfit-line" key={i}>{line}</div>
+                          ))
+                        }
+                      </div>
+                    </div>
                   )
                 }
 
@@ -186,13 +211,31 @@ function App() {
                 <div className="box">
                   <div className="label">Gender: </div>
                   <input type="text" placeholder='here...' className='drop' onChange={(e) => setGender(e.target.value)} />
-                  
+
                 </div>
 
                 <div className="box">
                   <div className="label">BodyType: </div>
-                  <input type="text" placeholder='here...' className='drop' onChange={(e) => setBody(e.target.value)} />
-                  
+                  <div className="custom-select">
+                    <div className="selected" onClick={() => setOpen(!open)}>
+                      {body || 'Select...'}
+                      <span className={`arrow ${open ? 'up' : ''}`}>▾</span>
+                    </div>
+                    {open && (
+                      <div className="options">
+                        {types.map((e) => (
+                          <div
+                            key={e.value}
+                            className="option"
+                            onClick={() => { setBody(e.value); setOpen(false) }}
+                          >
+                            {e.label}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
                 </div>
                 <div className="box">
                   <div className="label">Occasion: </div>
@@ -204,9 +247,12 @@ function App() {
           }
 
           <div className="desc">
-            <input type="text" placeholder='Any desc you wanna add?? ' onChange={(e) => setDesc(e.target.value)} />
+            <input type="text" placeholder='Any preferences for outfits?? ' onChange={(e) => setDesc(e.target.value)} />
             <button className="btn" onClick={heightch}>
-              ↑
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <line x1="12" y1="19" x2="12" y2="5" />
+                <polyline points="5 12 12 5 19 12" />
+              </svg>
             </button>
           </div>
         </div>
