@@ -96,41 +96,29 @@ async def gen_output(data: OutfitReq):
 
     """
 
-    # API_URL = "https://router.huggingface.co/hf-inference/models/black-forest-labs/FLUX.1-dev"
-    # res = requests.post(
-    #     API_URL,
-    #     headers={"Authorization": f"Bearer {API_KEY}"},
-    #     json={"inputs": content_HF,
-    #           "parameters": {
-    #                 "num_inference_steps": 40, 
-    #                 "guidance_scale": 8.0 
-    #             }
-    #         }
-    # )
-    # print("Status:", res.status_code)
+    API_URL = "https://router.huggingface.co/hf-inference/models/stabilityai/stable-diffusion-xl-base-1.0"
+    res = requests.post(
+        API_URL,
+        headers={"Authorization": f"Bearer {API_KEY}"},
+        json={"inputs": content_HF,
+              "parameters": {
+                    "num_inference_steps": 40, 
+                    "guidance_scale": 8.0 
+                }
+            }
+    )
+    print("Status:", res.status_code)
 
-    # if res.headers.get("content-type") != "image/jpeg":
-    #     error_detail = res.text
-    #     print("HF Error:", error_detail)  # shows in Render logs
-    #     return {"error": "Image generation failed", "details": error_detail}
-    # else:
-    #     print('Saved!')
-    #     image_base = base64.b64encode(res.content).decode('utf-8')
-    #     return {
-    #         'outfit': l,
-    #         'img': image_base
-    #     }
-
-    encoded_prompt = urllib.parse.quote(content_HF)
-    image_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=512&height=768&nologo=true"
-
-    res = requests.get(image_url)
-
-    if res.status_code == 200:
+    if res.headers.get("content-type") != "image/jpeg":
+        error_detail = res.text
+        print("HF Error:", error_detail)  
+        return {"error": "Image generation failed", "details": error_detail}
+    else:
+        print('Saved!')
         image_base = base64.b64encode(res.content).decode('utf-8')
         return {
             'outfit': l,
             'img': image_base
         }
-    else:
-        return {"error": "Image generation failed", "details": res.text}
+
+   
