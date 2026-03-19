@@ -572,3 +572,31 @@ button:hover {
     padding: 8px 12px;
   }
 }
+html {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+body {
+  overflow-x: hidden;
+  max-width: 100vw;  /* add this */
+}
+
+.main {
+  overflow-x: hidden;  /* add this */
+  width: 100vw;        /* add this */
+  max-width: 100vw;    /* add this */
+}
+
+.stick {
+  width: 100%;          /* already there, but make sure */
+  max-width: 100vw;     /* ADD THIS */
+  box-sizing: border-box;
+  left: 0;              /* ADD THIS */
+  overflow-x: hidden;   /* ADD THIS */
+}
+
+.inputs {
+  max-width: 100%;      /* ADD THIS */
+  overflow-x: hidden;   /* ADD THIS - removes horizontal scroll on input row */
+}
