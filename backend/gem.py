@@ -36,7 +36,7 @@ async def gen_output(data: OutfitReq):
     gender = data.gender
     body = data.body_type
     occasion = data.occasion
-    desc = desc
+    desc = data.desc
     budget = data.budget
     weather = f'the very feeling of surrounding of {occasion}'
     content = f""" You are a professional fashion stylist. Generate a COMPLETE outfit using REAL clothing items available in stores.
@@ -69,7 +69,7 @@ Keep descriptions short and realistic.
 
     image_prompt = prompt.choices[0].message.content
     lines = image_prompt.split('\n')
-    clean = [lines.strip() for l in lines if ':' in l]
+    clean = [l.strip() for l in lines if ':' in l]
     l = ', '.join(clean)
    
     content_HF = f""" 
