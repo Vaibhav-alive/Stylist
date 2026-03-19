@@ -35,7 +35,7 @@ function App() {
   function heightch() {
     setSent(true)
     setLoad(true)
-    // Fetch()
+    Fetch()
   }
   
   return (
