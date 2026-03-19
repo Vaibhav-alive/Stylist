@@ -36,22 +36,26 @@ async def gen_output(data: OutfitReq):
     gender = data.gender
     body = data.body_type
     occasion = data.occasion
+    desc = desc
     budget = data.budget
     weather = f'the very feeling of surrounding of {occasion}'
-    content = f"""
-    You are a professional fashion stylist.
-    Recommend a COMPLETE outfit using real clothing items sold in stores under the budget of  rs{budget} only.
-
-    Gender: {gender}
-    Occasion: {occasion}
-    Weather: {weather}
-    Body type: {body}
-    Output format ONLY:
-    Top:
-    Bottom:
-    Shoes:
-    Accessories:
-    Extra:
+    content = f""" You are a professional fashion stylist. Generate a COMPLETE outfit using REAL clothing items available in stores.
+Constraints:
+- Budget: under Rs {budget}
+- Gender: {gender}
+- Body Type: {body}
+- Occasion: {occasion}
+- Desc of clothes: {desc} 
+STRICT RULES:
+- Output ONLY in this exact format
+- No extra text, no explanations
+FORMAT:
+Top: <item name>, <color>, <brand>
+Bottom: <item name>, <color>, <brand>
+Shoes: <item name>, <color>, <brand>
+Accessories: <item>, <color>, <brand>
+Extra: <optional item>
+Keep descriptions short and realistic.
     """
     prompt = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
@@ -64,39 +68,22 @@ async def gen_output(data: OutfitReq):
     )
 
     image_prompt = prompt.choices[0].message.content
-    y = []
-    x = image_prompt.split(',')
-    for i in x:
-        y.append(i.replace('\n', ''))
-    y = ','.join(y)
-
-    summary = client.chat.completions.create(
-        model = 'llama-3.3-70b-versatile',
-        messages= [
-            {
-                "role": "user",
-                "content": f'Summarize this text {y} extract the top, bottom and other things with its colour and very specific in as low words possible and only give names of items with their bit desc in 4-5 words with their colour and their brand name for image generation'
-            }
-        ]
-    )
-
-    l = summary.choices[0].message.content
-    lines = l.split('\n')
-    unique_lines = list(dict.fromkeys(lines))  
-    l = '\n'.join(unique_lines)
-    print(l)
+    lines = image_prompt.split('\n')
+    clean = [lines.strip() for l in lines if ':' in l]
+    l = ', '.join(clean)
+   
     content_HF = f""" 
-                A full body professional fashion photograph of a {gender} model, {body} build.
-                The model is wearing:
+                 high-end fashion photoshoot of a {gender} model with a {body} body type.
+                Outfit:
                 {l}
-                Setting: {occasion} themed background, elegant atmosphere.
-                Photography style: Vogue editorial, fashion lookbook, studio quality.
-                Technical: shot on 85mm lens, soft studio lighting, 4k, sharp focus, ultra realistic.
-                Model: natural standing pose, confident expression, full body visible head to toe including shoes.
-                Quality: photorealistic, detailed fabric texture, professional fashion photography, high resolution.
-                Negative elements to avoid: cartoon, anime, illustration, deformed, blurry, watermark, text.
-
-    """
+                Scene: {occasion} setting, realistic environment.
+                Style: luxury fashion editorial, Vogue magazine, minimal background.
+                Ensure all clothing items match in style and color coordination.
+                Lighting: soft studio lighting, cinematic shadows.
+                Camera: 85mm lens, full body shot, sharp focus.
+                Quality: ultra realistic, 4k, highly detailed fabric textures.
+                Negative prompt: cartoon, anime, blurry, distorted body, bad anatomy, watermark, text.
+                """
 
     API_URL = "https://router.huggingface.co/hf-inference/models/stabilityai/stable-diffusion-xl-base-1.0"
     res = requests.post(
