@@ -70,7 +70,7 @@ Keep descriptions short and realistic.
     image_prompt = prompt.choices[0].message.content
     lines = image_prompt.split('\n')
     clean = [l.strip() for l in lines if ':' in l]
-    l = ', '.join(clean)
+    l = '\n'.join(clean)
    
     content_HF = f""" 
                  high-end fashion photoshoot of a {gender} model with a {body} body type.
