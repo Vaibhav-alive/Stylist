@@ -29,16 +29,18 @@ class OutfitReq(BaseModel):
     body_type: str
     occasion: str
     desc: str = ""
+    budget: str = ""
 
 @app.post('/gen')
 async def gen_output(data: OutfitReq):
     gender = data.gender
     body = data.body_type
     occasion = data.occasion
-    weather = f'the very weather of {occasion}'
+    budget = data.budget
+    weather = f'the very feeling of surrounding of {occasion}'
     content = f"""
     You are a professional fashion stylist.
-    Recommend a COMPLETE outfit using real clothing items sold in stores.
+    Recommend a COMPLETE outfit using real clothing items sold in stores under the budget of  rs{budget} only.
 
     Gender: {gender}
     Occasion: {occasion}
