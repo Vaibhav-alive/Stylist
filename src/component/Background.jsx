@@ -94,7 +94,7 @@ export default function Background() {
     }
     window.addEventListener('resize', onResize)
 
-    const clock = new THREE.Clock()
+    const clock = new THREE.Timer()
     let raf
     const tick = () => {
       raf = requestAnimationFrame(tick)
