@@ -471,7 +471,7 @@ button:active { transform: scale(.96); }
   .box          { flex: 1 1 calc(50% - 3px); }
   .prompt-ar    { padding: 80px 20px 130px; text-align: center; }
   .desc input   { height: 40px; font-size: 13px; }
-  button        { height: 40px; width: 100%; font-size: 12px; padding: 0 20px; }
+  button        { height: 40px; width: fit-content; font-size: 12px; padding: 0 20px; }
   .outfit-card  { flex-direction: column; align-items: center; }
   .outfit-card img { width: 85%; max-width: 100%; }
   .outfit-details  { width: 100%; }
