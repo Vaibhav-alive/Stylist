@@ -467,7 +467,7 @@ button:active { transform: scale(.96); }
   .nav-links    { display: none; }
   .page-counter { display: none; }
   .stick        { padding: 8px 14px 14px; gap: 6px; }
-  .inputs       { overflow: visible; }
+  .inputs       { overflow-x: auto; }
   .box          { flex: 1 1 calc(50% - 3px); }
   .prompt-ar    { padding: 80px 20px 130px; text-align: center; }
   .desc input   { height: 40px; font-size: 13px; }
