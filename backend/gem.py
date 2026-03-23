@@ -189,5 +189,5 @@ Keep descriptions short and realistic.
     img_base = base64.b64encode(res.content).decode('utf-8')
     return {
         'outfit': l,
-        'img': f"{img_base}"
+        'img': f"data:image/jpeg;base64,{img_base}"
     }

@@ -25,6 +25,7 @@ export default function App() {
     })
     console.log('API response:', res.data)
     setData(res.data)
+    setTryOnData(null)
     setLoad(false)
   }
 
@@ -42,6 +43,7 @@ export default function App() {
     const res = await axios.post('https://stylist-tdo3.onrender.com/try', formData)
     setTryOnData(res.data)
     setTryOnLoad(false)
+    setData(null)
     setSent(true)
   }
 
@@ -68,7 +70,7 @@ export default function App() {
             <div className="loading-text">TRYING ON…</div>
           )}
           {tryOnData && !tryOnLoad && (
-            <ResCard data={data} />
+            <ResCard data={tryOnData} />
           )}
         </div>
 
