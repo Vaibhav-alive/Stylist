@@ -39,9 +39,10 @@ export default function App() {
     formData.append('occasion',     occasion)
     formData.append('desc',         desc)
     formData.append('budget',       budget)
-    const res = await axios.post('https://stylist-tdo3.onrender.com/try-on', formData)
+    const res = await axios.post('https://stylist-tdo3.onrender.com/try', formData)
     setTryOnData(res.data)
     setTryOnLoad(false)
+    setSent(true)
   }
 
   function heightch() {
@@ -67,7 +68,7 @@ export default function App() {
             <div className="loading-text">TRYING ON…</div>
           )}
           {tryOnData && !tryOnLoad && (
-            <img src={tryOnData.img} alt="Try On Result" style={{ maxWidth: '100%', borderRadius: '12px' }} />
+            <ResCard data={data} />
           )}
         </div>
 

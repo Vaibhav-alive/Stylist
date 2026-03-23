@@ -112,7 +112,7 @@ Keep descriptions short and realistic.
         }
 @app.post('/try')
 async def tryon(
-    avatar_image:    UploadFile = File(...),
+    avatar_image:   UploadFile = File(...),
     gender:   str = Form(...),
     body:     str = Form(...),
     occasion: str = Form(...),
@@ -189,5 +189,5 @@ Keep descriptions short and realistic.
     img_base = base64.b64encode(res.content).decode('utf-8')
     return {
         'outfit': l,
-        'img': f"data:image/jpeg;base64,{img_base}"
+        'img': f"{img_base}"
     }
