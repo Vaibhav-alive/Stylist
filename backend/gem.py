@@ -108,7 +108,7 @@ Keep descriptions short and realistic.
         image_base = base64.b64encode(res.content).decode('utf-8')
         return {
             'outfit': l,
-            'img': image_base
+            'img': f'data:image/jpeg;base64,{image_base}'
         }
 @app.post('/try')
 async def tryon(

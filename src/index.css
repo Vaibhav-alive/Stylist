@@ -354,6 +354,7 @@ button:disabled {
   display: flex;
   gap: 10px;
   align-items: center;
+  overflow-x: auto;
   width: 100%;
 }
 .desc input {
@@ -414,11 +415,17 @@ button:active { transform: scale(.96); }
   gap: 24px;
   padding: 20px;
   animation: fadeUp .5s ease forwards;
+  /* height: clamp(450px, 60vh, 400px); */
+
 }
 .outfit-card img {
-  width: 42%; max-width: 320px;
+  width: 42%;
+  max-width: 320px;
+  max-height: calc(100dvh - 200px);
+  height: auto;                      
+  object-fit: contain;              
   border-radius: 18px;
-  box-shadow: 0 10px 48px rgba(0,0,0,.55);
+  /* box-shadow: 0 10px 48px rgba(0,0,0,.55); */
   transition: transform .4s ease;
 }
 .outfit-card img:hover { transform: scale(1.04); }
