@@ -9,10 +9,12 @@ const BODY_TYPES = [
   { value: 'heavy',    label: 'Broad' },
 ]
 
-export default function Inputs({ setGender, setOccasion, setDesc, setBody, setBudget, onSubmit }) {
-  const [open,      setOpen]      = useState(false)
-  const [bodyLocal, setBodyLocal] = useState('')
-  const [dropPos,   setDropPos]   = useState({ bottom: 0, left: 0, width: 140 })
+export default function Inputs({ setGender, setOccasion, setDesc, setBody, setBudget, onSubmit, onTryOn, setAvatarImage, avatarImage }) {
+  const [open,          setOpen]          = useState(false)
+  const [bodyLocal,     setBodyLocal]     = useState('')
+  const [dropPos,       setDropPos]       = useState({ bottom: 0, left: 0, width: 140 })
+  const [avatarLocal,   setAvatarLocal]   = useState(null)
+  const [clothingLocal, setClothingLocal] = useState(null)
   const triggerRef = useRef(null)
 
   useEffect(() => {
@@ -21,7 +23,6 @@ export default function Inputs({ setGender, setOccasion, setDesc, setBody, setBu
     const updatePos = () => {
       const rect = triggerRef.current?.getBoundingClientRect()
       if (rect) {
-        
         setDropPos({
           bottom: window.innerHeight - rect.top + 8,
           left:   rect.left,
@@ -70,7 +71,6 @@ export default function Inputs({ setGender, setOccasion, setDesc, setBody, setBu
   return (
     <div className="stick">
 
-     
       <div className="inputs">
         <div className="box">
           <span className="label">Gender</span>
@@ -79,7 +79,7 @@ export default function Inputs({ setGender, setOccasion, setDesc, setBody, setBu
 
         <div className="box">
           <span className="label">Budget</span>
-          <input type="text" placeholder="$100…" onChange={e => setBudget(e.target.value)} />
+          <input type="text" placeholder="₹100…" onChange={e => setBudget(e.target.value)} />
         </div>
 
         <div className="box" ref={triggerRef}>
@@ -96,22 +96,40 @@ export default function Inputs({ setGender, setOccasion, setDesc, setBody, setBu
           <span className="label">Occasion</span>
           <input type="text" placeholder="Casual…" onChange={e => setOccasion(e.target.value)} />
         </div>
+
+        <div className="box">
+          <span className="label">Your Photo</span>
+          <label className={`file-input ${avatarLocal ? 'has-file': ''}`}>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={e => {
+                setAvatarLocal(e.target.files[0])
+                setAvatarImage(e.target.files[0])
+              }}
+            />
+            {avatarLocal ? avatarLocal.name : '+ Upload Photo'}
+          </label>
+        </div>
+
       </div>
 
       {dropdown}
 
-  
       <div className="desc">
         <input
           type="text"
           placeholder="Any preferences for outfits??"
           onChange={e => setDesc(e.target.value)}
         />
-        <button onClick={onSubmit}>
+        <button onClick={onSubmit} disabled = {!!avatarImage}>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
           Style Me
+        </button>
+        <button onClick={onTryOn} disabled = {!avatarImage}>
+          👕 Try On
         </button>
       </div>
 

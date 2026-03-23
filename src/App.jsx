@@ -7,14 +7,17 @@ import Inputs from './component/Inputs'
 import axios from 'axios'
 
 export default function App() {
-  const [occasion, setOccasion] = useState('')
-  const [gender,   setGender]   = useState('')
-  const [budget,   setBudget]   = useState('')
-  const [desc,     setDesc]     = useState('')
-  const [body,     setBody]     = useState('')
-  const [sent,     setSent]     = useState(false)
-  const [data,     setData]     = useState(null)
-  const [load,     setLoad]     = useState(false)
+  const [occasion,      setOccasion]      = useState('')
+  const [gender,        setGender]        = useState('')
+  const [budget,        setBudget]        = useState('')
+  const [desc,          setDesc]          = useState('')
+  const [body,          setBody]          = useState('')
+  const [sent,          setSent]          = useState(false)
+  const [data,          setData]          = useState(null)
+  const [load,          setLoad]          = useState(false)
+  const [avatarImage,   setAvatarImage]   = useState(null)
+  const [tryOnData,     setTryOnData]     = useState(null)
+  const [tryOnLoad,     setTryOnLoad]     = useState(false)
 
   async function Fetch() {
     const res = await axios.post('https://stylist-tdo3.onrender.com/gen', {
@@ -23,6 +26,22 @@ export default function App() {
     console.log('API response:', res.data)
     setData(res.data)
     setLoad(false)
+  }
+
+  async function FetchTryOn() {
+    if (!avatarImage) return
+    setTryOnLoad(true)
+    const formData = new FormData()
+    formData.append('avatar_image', avatarImage)
+    formData.append('avatar_sex',   gender)
+    formData.append('gender',       gender)
+    formData.append('body',         body)
+    formData.append('occasion',     occasion)
+    formData.append('desc',         desc)
+    formData.append('budget',       budget)
+    const res = await axios.post('https://stylist-tdo3.onrender.com/try-on', formData)
+    setTryOnData(res.data)
+    setTryOnLoad(false)
   }
 
   function heightch() {
@@ -34,7 +53,6 @@ export default function App() {
   return (
     <>
       <Background />
-     
 
       <div className="main">
         <div className="prompt-ar">
@@ -45,6 +63,12 @@ export default function App() {
           {sent && !load && data && (
             <ResCard data={data} />
           )}
+          {tryOnLoad && (
+            <div className="loading-text">TRYING ON…</div>
+          )}
+          {tryOnData && !tryOnLoad && (
+            <img src={tryOnData.img} alt="Try On Result" style={{ maxWidth: '100%', borderRadius: '12px' }} />
+          )}
         </div>
 
         <Inputs
@@ -53,8 +77,11 @@ export default function App() {
           setOccasion={setOccasion}
           setDesc={setDesc}
           setBudget={setBudget}
+          avatarImage={avatarImage} 
+          setAvatarImage={setAvatarImage}
           data={data}
           onSubmit={heightch}
+          onTryOn={FetchTryOn}
         />
       </div>
     </>

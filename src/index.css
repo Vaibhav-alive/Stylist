@@ -303,11 +303,17 @@ html, body {
   font-family: 'DM Sans', sans-serif;
   outline: none;
   width: 72px; min-width: 0;
-  text-align: left;
+  text-align: center;
 }
 .box input::placeholder { color: var(--muted); }
 
-
+button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  box-shadow: none;
+  filter: none;
+  transform: none;
+}
 .custom-select { position: relative; font-size: 13px; }
 .selected {
   cursor: pointer;
@@ -479,4 +485,31 @@ button:active { transform: scale(.96); }
 
 @media (max-width: 420px) {
   .box { flex: 1 1 100%; }
+}
+.file-input {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 110px;
+  transition: color .2s;
+}
+
+.file-input input {
+  display: none;
+}
+
+.file-input:hover {
+  color: var(--accent);
+}
+
+/* when file is selected, show accent color */
+.file-input.has-file {
+  color: var(--accent);
 }

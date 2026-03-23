@@ -2,7 +2,7 @@ from groq import Groq
 import requests
 from PIL import Image
 from io import BytesIO
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import os
@@ -30,6 +30,7 @@ class OutfitReq(BaseModel):
     occasion: str
     desc: str = ""
     budget: str = ""
+    
 
 @app.post('/gen')
 async def gen_output(data: OutfitReq):
@@ -109,5 +110,84 @@ Keep descriptions short and realistic.
             'outfit': l,
             'img': image_base
         }
+@app.post('/try')
+async def tryon(
+    avatar_image:    UploadFile = File(...),
+    gender:   str = Form(...),
+    body:     str = Form(...),
+    occasion: str = Form(...),
+    desc:     str = Form(""),
+    budget:   str = Form(""),
+):
+    content = f""" You are a professional fashion stylist. Generate a COMPLETE outfit using REAL clothing items available in stores.
+Constraints:
+- Budget: under Rs {budget}
+- Gender: {gender}
+- Body Type: {body}
+- Occasion: {occasion}
+- Desc of clothes: {desc} 
+STRICT RULES:
+- Output ONLY in this exact format
+- No extra text, no explanations
+FORMAT:
+Top: <item name>, <color>, <brand>
+Bottom: <item name>, <color>, <brand>
+Shoes: <item name>, <color>, <brand>
+Accessories: <item>, <color>, <brand>
+Extra: <optional item>
+Keep descriptions short and realistic.
+    """
+    prompt = client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=[
+            {
+            "role": "user",
+            "content" : content
+            }
+        ]
+    )
 
+    image_prompt = prompt.choices[0].message.content
+    lines = image_prompt.split('\n')
+    clean = [l.strip() for l in lines if ':' in l]
+    l = '\n'.join(clean)
    
+    content_HF = f""" 
+                 high-end fashion photoshoot of a {gender} model with a {body} body type.
+                Outfit:
+                {l}
+                Scene: {occasion} setting, realistic environment.
+                Style: luxury fashion editorial, Vogue magazine, minimal background.
+                Ensure all clothing items match in style and color coordination.
+                Lighting: soft studio lighting, cinematic shadows.
+                Camera: 85mm lens, full body shot, sharp focus.
+                Quality: ultra realistic, 4k, highly detailed fabric textures.
+                Negative prompt: cartoon, anime, blurry, distorted body, bad anatomy, watermark, text.
+                """
+
+    headers = {
+        'x-rapidapi-key': os.getenv('RAPIDAPI_KEY'),
+        "x-rapidapi-host": "try-on-diffusion.p.rapidapi.com"
+    }
+
+    files = {
+        "avatar_image": (avatar_image.filename, await avatar_image.read(), avatar_image.content_type) 
+    }
+
+    data = {
+        "avatar_sex": f'{gender}',
+        "clothing_prompt": f"{l}",
+    }
+
+    res = requests.post(
+        "https://try-on-diffusion.p.rapidapi.com/try-on-file",
+        headers = headers,
+        files = files,
+        data = data
+    )
+
+    img_base = base64.b64encode(res.content).decode('utf-8')
+    return {
+        'outfit': l,
+        'img': f"data:image/jpeg;base64,{img_base}"
+    }
