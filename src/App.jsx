@@ -33,7 +33,7 @@ export default function App() {
   async function FetchTryOn() {
     if (!avatarImage) return
     setTryOnLoad(true)
-    const file = avatarImage.files[0]
+    const file = avatarImage
     let finalfile = file
     const isHeic =
       file.type === "image/heic" ||
