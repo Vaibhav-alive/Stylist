@@ -14,7 +14,6 @@ export default function Inputs({ setGender, setOccasion, setDesc, setBody, setBu
   const [bodyLocal,     setBodyLocal]     = useState('')
   const [dropPos,       setDropPos]       = useState({ bottom: 0, left: 0, width: 140 })
   const [avatarLocal,   setAvatarLocal]   = useState(null)
-  const [clothingLocal, setClothingLocal] = useState(null)
   const triggerRef = useRef(null)
 
   useEffect(() => {

@@ -5,6 +5,7 @@ import Hero from './component/Hero'
 import ResCard from './component/ResCard'
 import Inputs from './component/Inputs'
 import axios from 'axios'
+import heic2any from 'heic2any'
 
 export default function App() {
   const [occasion,      setOccasion]      = useState('')
@@ -32,8 +33,27 @@ export default function App() {
   async function FetchTryOn() {
     if (!avatarImage) return
     setTryOnLoad(true)
+    const file = avatarImage.files[0]
+    let finalfile = file
+    const isHeic =
+      file.type === "image/heic" ||
+      file.type === "image/heif" ||
+      file.name.toLowerCase().endsWith(".heic") ||
+      file.name.toLowerCase().endsWith(".heif");
+    
+    if (isHeic){
+      const convo = await heic2any({
+        blob: file,
+        toType: "image/jpeg"
+      })
+
+      finalfile = new File([convo], "converted.jpg",{
+        type: "image/jpeg"
+      })
+    }
+    
     const formData = new FormData()
-    formData.append('avatar_image', avatarImage)
+    formData.append('avatar_image', finalfile)
     formData.append('avatar_sex',   gender)
     formData.append('gender',       gender)
     formData.append('body',         body)

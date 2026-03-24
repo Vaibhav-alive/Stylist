@@ -176,7 +176,7 @@ Keep descriptions short and realistic.
     }
 
     data = {
-        "avatar_sex": f'{gender}',
+        "avatar_sex": f'{gender.lower()}',
         "clothing_prompt": f"{l}",
     }
 
