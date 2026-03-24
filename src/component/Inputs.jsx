@@ -103,8 +103,10 @@ export default function Inputs({ setGender, setOccasion, setDesc, setBody, setBu
               type="file"
               accept="image/*"
               onChange={e => {
-                setAvatarLocal(e.target.files[0])
-                setAvatarImage(e.target.files[0])
+                const file = e.target.files?.[0]   
+                if (!file) return                  
+                setAvatarLocal(file)
+                setAvatarImage(file)
               }}
             />
             {avatarLocal ? avatarLocal.name : '+ Upload Photo'}
