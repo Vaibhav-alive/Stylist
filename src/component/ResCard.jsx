@@ -9,7 +9,9 @@ const ResCard = ({data}) => {
   }
   return (
     <div className="outfit-card">
-        <img src={data.img} />
+        <div className="outfit-media">
+            <img src={data.img} alt="Generated outfit preview" />
+        </div>
         <div className="outfit-details">
             {parseOutfit(data.outfit).map((line, i) => (
                 <div className="outfit-line" key={i}>{line}</div>

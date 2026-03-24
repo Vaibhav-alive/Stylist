@@ -99,7 +99,8 @@ Keep descriptions short and realistic.
     )
     print("Status:", res.status_code)
 
-    if res.headers.get("content-type") != "image/jpeg":
+    content_type = res.headers.get("content-type", "")
+    if not content_type.startswith("image/"):
         error_detail = res.text
         print("HF Error:", error_detail)  
         return {"error": "Image generation failed", "details": error_detail}
@@ -108,7 +109,7 @@ Keep descriptions short and realistic.
         image_base = base64.b64encode(res.content).decode('utf-8')
         return {
             'outfit': l,
-            'img': f'data:image/jpeg;base64,{image_base}'
+            'img': f'data:{content_type};base64,{image_base}'
         }
 @app.post('/try')
 async def tryon(
@@ -186,8 +187,14 @@ Keep descriptions short and realistic.
         data = data
     )
 
+    content_type = res.headers.get("content-type", "")
+    if not content_type.startswith("image/"):
+        error_detail = res.text
+        print("Try-on Error:", error_detail)
+        return {"error": "Try-on image generation failed", "details": error_detail}
+
     img_base = base64.b64encode(res.content).decode('utf-8')
     return {
         'outfit': l,
-        'img': f"data:image/jpeg;base64,{img_base}"
+        'img': f"data:{content_type};base64,{img_base}"
     }

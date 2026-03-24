@@ -411,18 +411,23 @@ button:active { transform: scale(.96); }
 }
 .outfit-card {
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 24px;
   padding: 20px;
   animation: fadeUp .5s ease forwards;
   /* height: clamp(450px, 60vh, 400px); */
 
 }
-.outfit-card img {
-  width: 42%;
+.outfit-media {
+  flex: 0 0 42%;
   max-width: 320px;
   max-height: calc(100dvh - 200px);
-  height: auto;                      
+  display: flex;
+}
+.outfit-card img {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
   object-fit: contain;              
   border-radius: 18px;
   /* box-shadow: 0 10px 48px rgba(0,0,0,.55); */
@@ -486,7 +491,8 @@ button:active { transform: scale(.96); }
   .desc input   { height: 40px; font-size: 13px; }
   button        { height: 40px; width: fit-content; font-size: 12px; padding: 0 20px; }
   .outfit-card  { flex-direction: column; align-items: center; }
-  .outfit-card img { width: 85%; max-width: 100%; }
+  .outfit-media { width: 85%; max-width: 100%; max-height: none; }
+  .outfit-card img { width: 100%; height: auto; max-width: 100%; }
   .outfit-details  { width: 100%; }
 }
 
