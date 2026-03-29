@@ -22,11 +22,10 @@ Try it out now: https://stylist-navy.vercel.app/
 - **AI Services**: Groq (LLM for suggestions), Hugging Face (image generation + try-on diffusion)
 
 ### Screenshots
-<img width="1366" height="200" alt="Elio-landing page" src="https://github.com/user-attachments/assets/542484de-611b-4b43-b881-9be45420dc7b" />
-<img width="1366" height="200" alt="response(style me)" src="https://github.com/user-attachments/assets/353d6f25-48ff-41d4-844c-8713c8ff7fff" />
+<img width="1366" height="400" alt="Elio-landing page" src="https://github.com/user-attachments/assets/542484de-611b-4b43-b881-9be45420dc7b" />
+<img width="1366" height="400" alt="response(style me)" src="https://github.com/user-attachments/assets/353d6f25-48ff-41d4-844c-8713c8ff7fff" />
 ![4c2016bb414ac55822e025ab2f2e0a33](https://github.com/user-attachments/assets/026c4f0d-1aa8-45c1-af9b-5065e967fdd1)
-
-<img width="1366" height="200" alt="virtual-try-on" src="https://github.com/user-attachments/assets/d1036e13-30c8-42a2-8bad-af0282828ce4" />
+<img width="1366" height="400" alt="virtual-try-on" src="https://github.com/user-attachments/assets/d1036e13-30c8-42a2-8bad-af0282828ce4" />
 
 
 
