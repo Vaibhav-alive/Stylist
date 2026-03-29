@@ -22,7 +22,11 @@ Try it out now: https://stylist-navy.vercel.app/
 - **AI Services**: Groq (LLM for suggestions), Hugging Face (image generation + try-on diffusion)
 
 ### Screenshots
-<img width="429" height="266" alt="Group 2" src="https://github.com/user-attachments/assets/1f8c9fcf-e962-47e6-ace7-6474e2f1dd53" />
+<img width="1366" height="200" alt="Elio-landing page" src="https://github.com/user-attachments/assets/542484de-611b-4b43-b881-9be45420dc7b" />
+<img width="1366" height="200" alt="response(style me)" src="https://github.com/user-attachments/assets/353d6f25-48ff-41d4-844c-8713c8ff7fff" />
+![4c2016bb414ac55822e025ab2f2e0a33](https://github.com/user-attachments/assets/026c4f0d-1aa8-45c1-af9b-5065e967fdd1)
+
+<img width="1366" height="200" alt="virtual-try-on" src="https://github.com/user-attachments/assets/d1036e13-30c8-42a2-8bad-af0282828ce4" />
 
 
 
@@ -38,8 +42,9 @@ Try it out now: https://stylist-navy.vercel.app/
 # 1. Backend
 cd backend
 pip install -r requirements.txt
-uvicorn gem:app --reload   # (or whatever your start command is)
+code .env
+in .env file create variables: GROQ_API_KEY = YOUR_API_KEY, HF_API_KE= your_key, RAPIDAPI_KEY= your_key
+uvicorn gem:app --reload   
 
-cd AI-stylist
 npm install
 npm run dev
