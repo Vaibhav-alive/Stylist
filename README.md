@@ -9,7 +9,7 @@ A fun AI-powered virtual stylist that suggests outfits and lets you **virtually 
 4. If you upload your photo, the try-on diffusion model places the suggested outfit on you while keeping your face realistic.
 
 It works surprisingly well even on free-tier APIs!
-
+Try it out now: https://stylist-navy.vercel.app/
 ### Features
 - Personalized outfit recommendations based on occasion, budget & taste
 - AI image generation of outfits
