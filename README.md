@@ -22,15 +22,8 @@ It works surprisingly well even on free-tier APIs!
 - **AI Services**: Groq (LLM for suggestions), Hugging Face (image generation + try-on diffusion)
 
 ### Screenshots
-Style me:
-<img width="1366" height="630" alt="Elio-landing page" src="https://github.com/user-attachments/assets/a056b40b-618b-4c02-b2eb-da3153ae749c" />
-<img width="1366" height="635" alt="response(style me)" src="https://github.com/user-attachments/assets/8235d97a-ed75-4c11-b20a-4c4e6ce37df8" />
+<img width="429" height="266" alt="Group 2" src="https://github.com/user-attachments/assets/1f8c9fcf-e962-47e6-ace7-6474e2f1dd53" />
 
-Virtual Try on:
-Before: 
-![4c2016bb414ac55822e025ab2f2e0a33](https://github.com/user-attachments/assets/9cf2554d-6e97-4d58-b507-fb5dc6c44fb7)
-After:
-<img width="1366" height="633" alt="virtual-try-on" src="https://github.com/user-attachments/assets/1a386420-c2ee-4965-9a81-b358016b5908" />
 
 
 ### What I Learned
