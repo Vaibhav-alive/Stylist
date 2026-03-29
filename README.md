@@ -1,16 +1,52 @@
-# React + Vite
+# AI Stylist ✨
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fun AI-powered virtual stylist that suggests outfits and lets you **virtually try them on** using your own photo.
 
-Currently, two official plugins are available:
+### How It Works
+1. Enter your details: gender, occasion, budget, and personal preferences.
+2. The backend uses **Groq** to generate smart outfit recommendations (with description, colors, brands).
+3. The outfit description is sent to **Hugging Face** to generate an image.
+4. If you upload your photo, the try-on diffusion model places the suggested outfit on you while keeping your face realistic.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+It works surprisingly well even on free-tier APIs!
 
-## React Compiler
+### Features
+- Personalized outfit recommendations based on occasion, budget & taste
+- AI image generation of outfits
+- Virtual Try-On feature (uploads your face + applies outfit)
+- Full-stack app with smooth frontend-backend communication
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Tech Stack
+- **Frontend**: React.js (with nice glow effects)
+- **Backend**: Python + FastAPI
+- **AI Services**: Groq (LLM for suggestions), Hugging Face (image generation + try-on diffusion)
 
-## Expanding the ESLint configuration
+### Screenshots
+Style me:
+<img width="1366" height="630" alt="Elio-landing page" src="https://github.com/user-attachments/assets/a056b40b-618b-4c02-b2eb-da3153ae749c" />
+<img width="1366" height="635" alt="response(style me)" src="https://github.com/user-attachments/assets/8235d97a-ed75-4c11-b20a-4c4e6ce37df8" />
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Virtual Try on:
+Before: 
+![4c2016bb414ac55822e025ab2f2e0a33](https://github.com/user-attachments/assets/9cf2554d-6e97-4d58-b507-fb5dc6c44fb7)
+After:
+<img width="1366" height="633" alt="virtual-try-on" src="https://github.com/user-attachments/assets/1a386420-c2ee-4965-9a81-b358016b5908" />
+
+
+### What I Learned
+- API orchestration between multiple AI services
+- Prompt engineering (one-shot prompting, negative prompts, etc.)
+- How to connect React frontend with Python FastAPI backend
+- Using Axios for cleaner API calls (much better than raw fetch)
+- Initializing and working with Groq + Hugging Face in a real project
+
+### How to Run Locally
+```bash
+# 1. Backend
+cd backend
+pip install -r requirements.txt
+uvicorn gem:app --reload   # (or whatever your start command is)
+
+cd AI-stylist
+npm install
+npm run dev
