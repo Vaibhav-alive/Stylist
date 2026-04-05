@@ -17,6 +17,8 @@ client = Groq(api_key= os.getenv('GROQ_API_KEY'))
 
 app = FastAPI()
 
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -31,6 +33,9 @@ class OutfitReq(BaseModel):
     desc: str = ""
     budget: str = ""
     
+@app.post('/')
+def root():
+    return ({'health': 'alive'})
 
 @app.post('/gen')
 async def gen_output(data: OutfitReq):
