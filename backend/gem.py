@@ -35,7 +35,7 @@ class OutfitReq(BaseModel):
     
 @app.post('/')
 def root():
-    return ({'health': 'alive'})
+    return {'status': 'alive'}
 
 @app.post('/gen')
 async def gen_output(data: OutfitReq):
