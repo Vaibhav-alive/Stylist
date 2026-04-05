@@ -33,7 +33,7 @@ class OutfitReq(BaseModel):
     desc: str = ""
     budget: str = ""
     
-@app.post('/')
+@app.get('/')
 def root():
     return {'status': 'alive'}
 
