@@ -1,6 +1,7 @@
 import React from 'react'
 
 const ResCard = ({data}) => {
+    if (!data.img) return null
     function parseOutfit(text) {
     if (!text) return []
     return text

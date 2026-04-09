@@ -17,8 +17,6 @@ client = Groq(api_key= os.getenv('GROQ_API_KEY'))
 
 app = FastAPI()
 
-
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -91,7 +89,7 @@ Keep descriptions short and realistic.
                 Negative prompt: cartoon, anime, blurry, distorted body, bad anatomy, watermark, text.
                 """
 
-    API_URL = "https://router.huggingface.co/hf-inference/models/stabilityai/stable-diffusion-xl-base-1.0"
+    API_URL = "https://router.huggingface.co/hf-inference/models/black-forest-labs/FLUX.1-schnell"
     res = requests.post(
         API_URL,
         headers={"Authorization": f"Bearer {API_KEY}"},
