@@ -44,7 +44,7 @@ cd backend
 pip install -r requirements.txt
 code .env
 in .env file create variables: GROQ_API_KEY = YOUR_API_KEY, HF_API_KE= your_key, RAPIDAPI_KEY= your_key
-uvicorn gem:app --reload   
+uvicorn main:app --reload   
 
 npm install
 npm run dev
